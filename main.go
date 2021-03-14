@@ -11,13 +11,17 @@ import (
 )
 
 var (
-	dir  string
-	port string
+	dir     string
+	port    string
+	sslKey  string
+	sslCert string
 )
 
 var (
 	flagDir     string
 	flagPort    string
+	flagKey     string
+	flagCert    string
 	flagHTTPS   bool
 	flagHelp    bool
 	flagVersion bool
@@ -41,14 +45,27 @@ func main() {
 		dir = "./"
 	}
 
-	if flagHTTPS {
-		port = "443"
-	}
-
 	if flagPort != "" {
 		port = flagPort
 	} else {
 		port = "8080"
+	}
+
+	if flagHTTPS {
+		if flagPort == "" {
+			port = "443"
+		}
+		if flagKey != "" {
+			sslKey = flagKey
+		} else {
+			sslKey = "server.key"
+		}
+
+		if flagCert != "" {
+			sslCert = flagCert
+		} else {
+			sslCert = "server.crt"
+		}
 	}
 
 	if flagHTTPS {
@@ -62,7 +79,7 @@ func main() {
 
 	http.Handle("/", http.FileServer(http.Dir(dir)))
 	if flagHTTPS {
-		log.Fatal(http.ListenAndServeTLS(":"+port, "server.crt", "server.key", nil))
+		log.Fatal(http.ListenAndServeTLS(":"+port, sslCert, sslKey, nil))
 	} else {
 		log.Fatal(http.ListenAndServe(":"+port, nil))
 	}
@@ -71,6 +88,8 @@ func main() {
 func init() {
 	flag.StringVarP(&flagDir, "dir", "d", "", "directory to serve")
 	flag.StringVarP(&flagPort, "port", "p", "", "set port to serve")
+	flag.StringVarP(&flagKey, "key", "k", "", "openssl key location for HTTPS")
+	flag.StringVarP(&flagCert, "cert", "C", "", "openssl cert location for HTTPS")
 	flag.BoolVarP(&flagHTTPS, "https", "S", false, "serve over HTTPS")
 	flag.BoolVarP(&flagHelp, "help", "h", false, "help message")
 	flag.BoolVarP(&flagVersion, "version", "v", false, "print version")
@@ -84,7 +103,7 @@ func printUsage() {
 	os.Exit(0)
 }
 func printVersion() {
-	version := "1.0.0"
+	version := "1.1.0"
 	fmt.Println(os.Args[0] + " version " + version)
 	os.Exit(0)
 }

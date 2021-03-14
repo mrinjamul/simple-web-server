@@ -19,7 +19,7 @@ simple-web-server -p 8081 -d "./" # port and directory optional
 
 Running over HTTPS requires openssl key and openssl certificate to run.
 
-Remove demo key and certificate and generate with name `server.key` and `server.crt`.
+you can download demo (key+certificate) from release section or generate with name `server.key` and `server.crt`.
 
 To generate key and certificate,
 
@@ -32,7 +32,7 @@ $ openssl req -new -x509 -sha256 -key server.key -out server.crt -days 3650
 Running over HTTPS,
 
 ```sh
-simple-web-server -d "./" --https -p 8443 # port and directory optional
+simple-web-server -d "./" --https -p 8443 -key "server.key" --cert "server.crt" # port and directory optional
 ```
 
 ## Some defaults
@@ -45,9 +45,11 @@ simple-web-server -d "./" --https -p 8443 # port and directory optional
 
     Usage: simple-web-server [options]
     Options:
+    -C, --cert string   openssl cert location for HTTPS
     -d, --dir string    directory to serve
     -h, --help          help message
     -S, --https         serve over HTTPS
+    -k, --key string    openssl key location for HTTPS
     -p, --port string   set port to serve
     -v, --version       print version
 
