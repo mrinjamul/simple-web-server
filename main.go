@@ -75,6 +75,11 @@ func main() {
 		colour.Blue("Starting Web Server...")
 	}
 
+	_, present := os.LookupEnv("PORT")
+	if present {
+			port = os.Getenv("PORT")
+	}
+	
 	colour.Blue("Starting on port " + port)
 
 	http.Handle("/", http.FileServer(http.Dir(dir)))
