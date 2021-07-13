@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"os"
 
-	colour "github.com/fatih/color"
 	flag "github.com/spf13/pflag"
 )
 
@@ -69,18 +68,18 @@ func main() {
 	}
 
 	if flagHTTPS {
-		colour.Blue("Starting Web Server over HTTPS...")
+		log.Println("Starting Web Server over HTTPS...")
 
 	} else {
-		colour.Blue("Starting Web Server...")
+		log.Println("Starting Web Server...")
 	}
 
 	_, present := os.LookupEnv("PORT")
 	if present {
-			port = os.Getenv("PORT")
+		port = os.Getenv("PORT")
 	}
-	
-	colour.Blue("Starting on port " + port)
+
+	log.Println("Starting on port " + port)
 
 	http.Handle("/", http.FileServer(http.Dir(dir)))
 	if flagHTTPS {
@@ -108,7 +107,7 @@ func printUsage() {
 	os.Exit(0)
 }
 func printVersion() {
-	version := "1.1.0"
+	version := "1.1.2"
 	fmt.Println(os.Args[0] + " version " + version)
 	os.Exit(0)
 }

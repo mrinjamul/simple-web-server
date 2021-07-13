@@ -14,6 +14,9 @@ jobs:
           - GOOS: darwin
             GOARCH: amd64
             suffix: darwin-amd64
+          - GOOS: darwin
+            GOARCH: arm64
+            suffix: darwin-arm64
           - GOOS: windows
             GOARCH: amd64
             suffix: windows-amd64.exe
@@ -21,8 +24,12 @@ jobs:
             GOARCH: amd64
             suffix: linux-amd64
           - GOOS: linux
+            GOARCH: arm64
+            suffix: linux-arm64
+          - GOOS: linux
             GOARCH: arm
             suffix: linux-armv7
+
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-go@v2
