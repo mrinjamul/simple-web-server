@@ -79,6 +79,11 @@ func main() {
 		port = os.Getenv("PORT")
 	}
 
+	_, present = os.LookupEnv("DIR")
+	if present {
+		dir = os.Getenv("DIR")
+	}
+
 	log.Println("Starting on port " + port)
 
 	http.Handle("/", http.FileServer(http.Dir(dir)))

@@ -35,6 +35,39 @@ Running over HTTPS,
 simple-web-server -d "./" --https -p 8443 -key "server.key" --cert "server.crt" # port and directory optional
 ```
 
+## Docker
+
+Run,
+
+```shell
+docker run --rm -d -p 8080:8080 --name myawesomeapp -v "$PWD":/root/static mrinjamul/sws:latest
+```
+
+For Dockerfile,
+
+```yml
+# Dockerfile
+FROM mrinjamul/sws:latest
+ADD . static
+```
+
+For docker-compose,
+
+```yml
+#docker-compose.yml
+version: "3"
+
+services:
+  sws:
+    container_name: sws
+    restart: always
+    image: mrinjamul/sws:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ".:/root/static"
+```
+
 ## Some defaults
 
 - default port 8080 for http
