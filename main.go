@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/pkg/browser"
 	flag "github.com/spf13/pflag"
 )
 
@@ -22,6 +23,7 @@ var (
 	flagKey     string
 	flagCert    string
 	flagHTTPS   bool
+	flagWeb     bool
 	flagHelp    bool
 	flagVersion bool
 )
@@ -86,6 +88,16 @@ func main() {
 
 	log.Println("Starting on port " + port)
 
+	url := "http://"
+	if flagHTTPS {
+		url = "https://"
+	}
+	url += "localhost" + ":" + port
+	if flagWeb {
+		err := browser.OpenURL(url)
+		log.Println(err)
+	}
+
 	http.Handle("/", http.FileServer(http.Dir(dir)))
 	if flagHTTPS {
 		log.Fatal(http.ListenAndServeTLS(":"+port, sslCert, sslKey, nil))
@@ -100,6 +112,7 @@ func init() {
 	flag.StringVarP(&flagKey, "key", "k", "", "openssl key location for HTTPS")
 	flag.StringVarP(&flagCert, "cert", "C", "", "openssl cert location for HTTPS")
 	flag.BoolVarP(&flagHTTPS, "https", "S", false, "serve over HTTPS")
+	flag.BoolVarP(&flagWeb, "web", "w", false, "open url in web browser")
 	flag.BoolVarP(&flagHelp, "help", "h", false, "help message")
 	flag.BoolVarP(&flagVersion, "version", "v", false, "print version")
 
