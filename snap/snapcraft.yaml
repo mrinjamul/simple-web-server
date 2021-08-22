@@ -1,0 +1,27 @@
+name: simple-web-server
+base: core18 # the base snap is the execution environment for this snap
+version: "1.1.2"
+summary: A Simple (static) Web Server
+description: |
+  simple-web-server is created to be as simple as possible to help you
+   serve (quickly) static web pages for development purposes.
+   Can be used in production but use it at your own risk.
+
+grade: stable
+confinement: strict
+
+apps:
+  simple-web-server:
+    command: simple-web-server
+
+parts:
+  simple-web-server:
+    plugin: go
+    source: .
+    go-importpath: simple-web-server
+
+plugs:
+  simple-web-server-home:
+    interface: home
+  simple-web-server-removable-media:
+    interface: removable-media
