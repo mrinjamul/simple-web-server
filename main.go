@@ -11,6 +11,12 @@ import (
 )
 
 var (
+	AppName   = "sws"
+	Version   = "dev"
+	GitCommit = "none"
+)
+
+var (
 	dir     string
 	port    string
 	sslKey  string
@@ -125,7 +131,6 @@ func printUsage() {
 	os.Exit(0)
 }
 func printVersion() {
-	version := "1.1.2"
-	fmt.Println(os.Args[0] + " version " + version)
+	fmt.Println(os.Args[0] + " version " + Version + "-" + GitCommit)
 	os.Exit(0)
 }

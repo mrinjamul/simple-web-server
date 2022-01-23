@@ -14,14 +14,10 @@ RUN go build -o main .
 
 
 ######## Start a new stage from scratch #######
-FROM scratch
+FROM alpine:latest
 
-# SET environments
-ENV DIR=static
 # Add Maintainer Info
 LABEL maintainer="Injamul Mohammad Mollah <mrinjamul@gmail.com>"
-# Set working directory
-WORKDIR /root/
 # Copy the Pre-built binary file from the previous stage
 COPY --from=builder /src/main .
 # Command to run the executable
