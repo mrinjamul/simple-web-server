@@ -14,6 +14,9 @@ simple-web-server
 sws
 /releases
 *.sh
+config.json
+config.yaml
+config.yml
 
 # secrets
 server.key
