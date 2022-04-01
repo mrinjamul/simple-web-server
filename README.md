@@ -37,24 +37,16 @@ simple-web-server -d "./" --https -p 8443 -key "server.key" --cert "server.crt" 
 
 ## Docker
 
-Instant Use,
+### Instant Run
 
-    ```sh
-    docker run --rm -it -p 8080:8080 --name myawesomeapp -v "$PWD":/home/app mrinjamul/sws:latest
-    ```
-
-Or,
-
-To use in Docker Image,
-
-```sh
-docker pull mrinjamul/sws:latest
-
+```shell
+docker run --rm -d -p 8080:8080 --name myawesomeapp -v "$PWD":/home/app mrinjamul/sws:latest
 ```
 
-Sample `Dockerfile` for web page deployment,
+### Dockerfile
 
-```Dockerfile
+```yml
+# Dockerfile
 FROM mrinjamul/sws:latest
 
 WORKDIR /home/app
@@ -66,11 +58,21 @@ COPY sws.json /etc/sws/config.json
 CMD ["sws"]
 ```
 
-And Now build the Image to use it on any project.
+### docker-compose
 
-```sh
-docker build -t [appname] .
+```yml
+#docker-compose.yml
+version: "3"
 
+services:
+  sws:
+    container_name: sws
+    restart: always
+    image: mrinjamul/sws:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ".:/home/app"
 ```
 
 ## Some defaults
