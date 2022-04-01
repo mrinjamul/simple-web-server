@@ -37,7 +37,42 @@ simple-web-server -d "./" --https -p 8443 -key "server.key" --cert "server.crt" 
 
 ## Docker
 
-_Coming Soon_
+Instant Use,
+
+    ```sh
+    docker run --rm -it -p 8080:8080 --name myawesomeapp -v "$PWD":/home/app mrinjamul/sws:latest
+    ```
+
+Or,
+
+To use in Docker Image,
+
+```sh
+docker pull mrinjamul/sws:latest
+
+```
+
+Sample `Dockerfile` for web page deployment,
+
+```Dockerfile
+FROM mrinjamul/sws:latest
+
+WORKDIR /home/app
+
+ADD . /home/app
+
+COPY sws.json /etc/sws/config.json
+
+CMD ["sws"]
+```
+
+And Now build the Image to use it on any project.
+
+```sh
+docker build -t [appname] .
+
+```
+
 ## Some defaults
 
 - default port 8080 for http
