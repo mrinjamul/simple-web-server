@@ -1,0 +1,7 @@
+{
+  "port": "8080",
+  "dir": "./",
+  "ssl_key": "",
+  "ssl_cert": "",
+  "https": false
+}

@@ -34,7 +34,24 @@ var (
 	flagVersion bool
 )
 
+var (
+	config *Config
+)
+
+func init() {
+	// Load Config from file
+	config = GetConfig()
+}
+
 func main() {
+
+	// Get config from file
+	flagDir = config.Dir
+	flagPort = config.Port
+	flagKey = config.SslCert
+	flagCert = config.SslCert
+	flagHTTPS = config.HTTPS
+
 	// parse flags
 	flag.Parse()
 
